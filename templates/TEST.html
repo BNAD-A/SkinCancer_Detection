@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DermaScan - Workflow complet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .bodymap-container {
+            position: relative;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .bodymap-image {
+            width: 100%;
+            height: auto;
+            pointer-events: none;
+        }
+        .zone-selector {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(66, 133, 244, 0.3);
+            border: 2px dashed #4285f4;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .zone-selector:hover {
+            background-color: rgba(66, 133, 244, 0.5);
+        }
+        .lesion-marker {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <span class="text-xl font-bold text-blue-600">DermaScan</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="text-blue-600 font-medium">Accueil</a>
+                <a href="#analyse" class="text-gray-600 hover:text-blue-600">Analyse</a>
+                <a href="#historique" class="text-gray-600 hover:text-blue-600">Historique</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Étape 1 : Sélection de la zone -->
+    <section id="zone-selection" class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-6 text-center">1. Sélectionnez la zone du corps</h2>
+            
+            <div class="bodymap-container mb-8">
+                <img src="/app/img/Face.jpg" alt="Corps humain de face" class="bodymap-image" id="body-image">
+                
+                <!-- Zones cliquables -->
+                <div class="zone-selector" style="top: 15%; left: 50%;" data-zone="visage"></div>
+                <div class="zone-selector" style="top: 30%; left: 30%;" data-zone="bras gauche"></div>
+                <div class="zone-selector" style="top: 30%; left: 70%;" data-zone="bras droit"></div>
+                <div class="zone-selector" style="top: 50%; left: 50%;" data-zone="torse"></div>
+                
+                <button id="switch-view" class="absolute top-2 right-2 bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm">
+                    <i class="fas fa-sync-alt mr-1"></i>Dos
+                </button>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">Zone sélectionnée : <span id="selected-zone" class="font-semibold">Aucune</span></p>
+                <button id="confirm-zone" class="bg-blue-600 text-white px-6 py-2 rounded-full disabled:opacity-50" disabled>
+                    Confirmer et analyser <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Étape 2 : Analyse (masquée initialement) -->
+    <section id="analyse-section" class="container mx-auto px-4 py-8 hidden">
+        <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-6 text-center">2. Analyse de la lésion</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center mb-4">
+                        <i class="fas fa-camera text-gray-400 text-4xl mb-3"></i>
+                        <p class="text-gray-500 mb-2">Déposez votre photo ici</p>
+                        <input type="file" id="lesion-image" accept="image/*" class="hidden">
+                        <label for="lesion-image" class="inline-block bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
+                            <i class="fas fa-upload mr-2"></i>Choisir un fichier
+                        </label>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-semibold mb-2">Zone analysée :</h4>
+                        <p id="analyse-zone" class="text-gray-700"></p>
+                    </div>
+                </div>
+                
+                <div>
+                    <div id="results-placeholder" class="text-center py-8 text-gray-400">
+                        <i class="fas fa-microscope text-4xl mb-3"></i>
+                        <p>Résultats d'analyse apparaîtront ici</p>
+                    </div>
+                    
+                    <div id="results-container" class="hidden">
+                        <div class="mb-4">
+                            <h4 class="font-semibold">Diagnostic :</h4>
+                            <p id="diagnostic-result" class="text-lg font-bold"></p>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="font-semibold">Niveau de risque :</h4>
+                            <div class="flex items-center mt-2">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div id="risk-level" class="h-2.5 rounded-full"></div>
+                                </div>
+                                <span id="risk-percent" class="ml-2 font-medium"></span>
+                            </div>
+                        </div>
+                        <button id="save-result" class="w-full bg-blue-600 text-white py-2 rounded">
+                            <i class="fas fa-save mr-2"></i>Enregistrer dans l'historique
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Étape 3 : Historique avec visualisation -->
+    <section id="historique-section" class="container mx-auto px-4 py-8 hidden">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-2xl font-bold mb-6 text-center">3. Historique des analyses</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Carte corporelle avec marqueurs -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold mb-4">Visualisation</h3>
+                    <div class="bodymap-container">
+                        <img src="/app/img/Face.jpg" alt="Corps humain" class="bodymap-image">
+                        <!-- Marqueurs générés dynamiquement -->
+                        <div id="historique-markers"></div>
+                    </div>
+                </div>
+                
+                <!-- Liste des analyses -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold mb-4">Détails des lésions</h3>
+                    <div class="space-y-4 max-h-96 overflow-y-auto pr-2" id="lesions-list">
+                        <!-- Exemple d'entrée -->
+                        <div class="border rounded-lg p-4 lesion-entry" data-id="1" data-zone="bras gauche">
+                            <div class="flex justify-between">
+                                <h4 class="font-bold">Lésion #1</h4>
+                                <span class="text-sm text-gray-500">15/05/2025</span>
+                            </div>
+                            <div class="flex mt-2">
+                                <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full mr-2">Bénin</span>
+                                <span class="text-sm text-gray-600">Bras gauche</span>
+                            </div>
+                            <button class="mt-2 text-blue-600 text-sm flex items-center view-detail">
+                                <i class="fas fa-eye mr-1"></i> Voir détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Gestion des vues
+        const sections = {
+            zone: document.getElementById('zone-selection'),
+            analyse: document.getElementById('analyse-section'),
+            historique: document.getElementById('historique-section')
+        };
+
+        // Étape 1: Sélection de la zone
+        let selectedZone = null;
+        
+        // Basculer entre face/dos
+        document.getElementById('switch-view').addEventListener('click', function() {
+            const img = document.getElementById('body-image');
+            if (img.src.includes('Face.jpg')) {
+                img.src = '/app/img/Dos.jpg';
+                this.innerHTML = '<i class="fas fa-sync-alt mr-1"></i>Face';
+            } else {
+                img.src = '/app/img/Face.jpg';
+                this.innerHTML = '<i class="fas fa-sync-alt mr-1"></i>Dos';
+            }
+        });
+
+        // Sélectionner une zone
+        document.querySelectorAll('.zone-selector').forEach(zone => {
+            zone.addEventListener('click', function() {
+                selectedZone = this.getAttribute('data-zone');
+                document.getElementById('selected-zone').textContent = selectedZone;
+                document.getElementById('confirm-zone').disabled = false;
+                
+                // Mise en évidence visuelle
+                document.querySelectorAll('.zone-selector').forEach(z => {
+                    z.style.backgroundColor = 'rgba(66, 133, 244, 0.3)';
+                });
+                this.style.backgroundColor = 'rgba(66, 133, 244, 0.7)';
+            });
+        });
+
+        // Confirmer la zone et passer à l'analyse
+        document.getElementById('confirm-zone').addEventListener('click', function() {
+            sections.zone.classList.add('hidden');
+            sections.analyse.classList.remove('hidden');
+            document.getElementById('analyse-zone').textContent = selectedZone;
+            
+            // Simuler le scroll
+            window.location.hash = '#analyse';
+        });
+
+        // Étape 2: Analyse
+        document.getElementById('lesion-image').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                // Simulation d'analyse
+                setTimeout(() => {
+                    document.getElementById('results-placeholder').classList.add('hidden');
+                    
+                    const results = {
+                        diagnostic: "Lésion bénigne",
+                        risk: 25,
+                        zone: selectedZone
+                    };
+                    
+                    document.getElementById('diagnostic-result').textContent = results.diagnostic;
+                    document.getElementById('risk-percent').textContent = results.risk + '%';
+                    
+                    const riskBar = document.getElementById('risk-level');
+                    riskBar.style.width = results.risk + '%';
+                    
+                    if (results.risk < 30) {
+                        riskBar.className = 'h-2.5 rounded-full bg-green-500';
+                        document.getElementById('diagnostic-result').className = 'text-lg font-bold text-green-600';
+                    } else if (results.risk < 70) {
+                        riskBar.className = 'h-2.5 rounded-full bg-yellow-500';
+                        document.getElementById('diagnostic-result').className = 'text-lg font-bold text-yellow-600';
+                    } else {
+                        riskBar.className = 'h-2.5 rounded-full bg-red-500';
+                        document.getElementById('diagnostic-result').className = 'text-lg font-bold text-red-600';
+                    }
+                    
+                    document.getElementById('results-container').classList.remove('hidden');
+                }, 1500);
+            }
+        });
+
+        // Enregistrer les résultats
+        document.getElementById('save-result').addEventListener('click', function() {
+            sections.analyse.classList.add('hidden');
+            sections.historique.classList.remove('hidden');
+            
+            // Ajouter à l'historique (simulation)
+            addToHistory({
+                id: Date.now(),
+                date: new Date().toLocaleDateString(),
+                zone: selectedZone,
+                diagnostic: document.getElementById('diagnostic-result').textContent,
+                risk: parseInt(document.getElementById('risk-percent').textContent)
+            });
+            
+            window.location.hash = '#historique';
+        });
+
+        // Étape 3: Historique
+        function addToHistory(lesion) {
+            const entry = document.createElement('div');
+            entry.className = 'border rounded-lg p-4 lesion-entry';
+            entry.setAttribute('data-id', lesion.id);
+            entry.setAttribute('data-zone', lesion.zone);
+            
+            let statusClass, statusText;
+            if (lesion.risk < 30) {
+                statusClass = 'bg-green-100 text-green-800';
+                statusText = 'Bénin';
+            } else if (lesion.risk < 70) {
+                statusClass = 'bg-yellow-100 text-yellow-800';
+                statusText = 'Suspect';
+            } else {
+                statusClass = 'bg-red-100 text-red-800';
+                statusText = 'Malin';
+            }
+            
+            entry.innerHTML = `
+                <div class="flex justify-between">
+                    <h4 class="font-bold">Lésion #${lesion.id.toString().slice(-3)}</h4>
+                    <span class="text-sm text-gray-500">${lesion.date}</span>
+                </div>
+                <div class="flex mt-2">
+                    <span class="px-2 py-1 text-xs ${statusClass} rounded-full mr-2">${statusText}</span>
+                    <span class="text-sm text-gray-600">${lesion.zone}</span>
+                </div>
+                <button class="mt-2 text-blue-600 text-sm flex items-center view-detail">
+                    <i class="fas fa-eye mr-1"></i> Voir détails
+                </button>
+            `;
+            
+            document.getElementById('lesions-list').prepend(entry);
+            updateBodyMarkers();
+        }
+
+        // Mettre à jour les marqueurs sur la bodymap
+        function updateBodyMarkers() {
+            const markersContainer = document.getElementById('historique-markers');
+            markersContainer.innerHTML = '';
+            
+            document.querySelectorAll('.lesion-entry').forEach(entry => {
+                const zone = entry.getAttribute('data-zone');
+                const isBenign = entry.querySelector('.bg-green-100');
+                const isSuspect = entry.querySelector('.bg-yellow-100');
+                
+                const marker = document.createElement('div');
+                marker.className = 'lesion-marker absolute';
+                marker.style.top = getZonePosition(zone).top;
+                marker.style.left = getZonePosition(zone).left;
+                
+                if (isBenign) {
+                    marker.classList.add('bg-green-500');
+                } else if (isSuspect) {
+                    marker.classList.add('bg-yellow-500');
+                } else {
+                    marker.classList.add('bg-red-500');
+                }
+                
+                marker.innerHTML = '<i class="fas fa-circle"></i>';
+                markersContainer.appendChild(marker);
+            });
+        }
+
+        // Positions des zones (à adapter selon votre image)
+        function getZonePosition(zone) {
+            const positions = {
+                'visage': { top: '15%', left: '50%' },
+                'bras gauche': { top: '30%', left: '30%' },
+                'bras droit': { top: '30%', left: '70%' },
+                'torse': { top: '50%', left: '50%' }
+            };
+            return positions[zone] || { top: '50%', left: '50%' };
+        }
+    </script>
+</body>
+</html>

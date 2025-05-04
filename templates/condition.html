@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}Conditions d'utilisation - SKINIA{% endblock %}
+{% block content %}
+
+<div class="bg-gradient-to-br from-blue-50 to-teal-50 min-h-screen py-12 px-4">
+  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+    
+    <!-- Header section with wave SVG -->
+    <div class="relative bg-gradient-to-r from-teal-500 to-blue-600 py-16 px-8 text-white">
+      <h1 class="text-4xl font-bold mb-4">Conditions d'utilisation</h1>
+      <p class="text-xl opacity-90">Votre allié pour la détection précoce des problèmes cutanés</p>
+      
+      <!-- Wave SVG at bottom of header -->
+      <div class="absolute bottom-0 left-0 w-full overflow-hidden">
+        <svg class="w-full h-16" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C62.28,19.45,123.52,41.07,181.48,51.08Z" class="fill-white"></path>
+        </svg>
+      </div>
+    </div>
+    
+    <div class="p-8">
+      <!-- Introduction avec icône -->
+      <div class="flex items-start mb-8 p-6 bg-blue-50 rounded-lg">
+        <div class="bg-blue-600 text-white p-3 rounded-full mr-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-blue-800 mb-2">Service d'assistance médicale</h2>
+          <p class="text-gray-700">SKINIA propose un outil d'aide à la décision médicale basé sur l'intelligence artificielle. Notre service ne constitue en aucun cas un diagnostic médical et ne remplace pas la consultation d'un professionnel de santé qualifié.</p>
+        </div>
+      </div>
+      
+      <!-- Card layout for main sections -->
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <!-- Card 1: Utilisation appropriée -->
+        <div class="bg-gradient-to-br from-teal-50 to-blue-50 p-6 rounded-lg border border-teal-100 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center mb-4">
+            <div class="bg-teal-500 text-white p-2 rounded-full mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800">Utilisation appropriée</h3>
+          </div>
+          <ul class="space-y-2 text-gray-700">
+            <li class="flex items-center">
+              <svg class="h-4 w-4 text-teal-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              L'application est destinée aux adultes de 18 ans et plus
+            </li>
+            <li class="flex items-center">
+              <svg class="h-4 w-4 text-teal-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              Les analyses sont limitées aux lésions cutanées visibles
+            </li>
+            <li class="flex items-center">
+              <svg class="h-4 w-4 text-teal-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+              L'utilisateur s'engage à fournir des images de qualité suffisante
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Card 2: Limitations technologiques -->
+        <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-lg border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center mb-4">
+            <div class="bg-blue-500 text-white p-2 rounded-full mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-800">Limitations technologiques</h3>
+          </div>
+          <p class="text-gray-700 mb-4">Notre algorithme présente une précision élevée mais non absolue. Certains types de lésions, conditions particulières d'éclairage ou qualités d'image peuvent affecter les résultats.</p>
+          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-yellow-700">
+                  En cas de doute ou de symptômes persistants, consultez immédiatement un dermatologue.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Principales sections en accordéon -->
+      <div class="space-y-4 mb-8">
+        <div class="border border-gray-200 rounded-lg overflow-hidden">
+          <div class="bg-gray-50 px-6 py-4">
+            <h3 class="text-lg font-medium text-gray-900">1. Introduction</h3>
+          </div>
+          <div class="px-6 py-4 bg-white">
+            <p class="text-gray-700">Ces conditions régissent l'utilisation de l'application SKINIA, destinée à la détection précoce du cancer de la peau à l'aide d'intelligence artificielle. En utilisant cette application, vous acceptez ces conditions d'utilisation.</p>
+          </div>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg overflow-hidden">
+          <div class="bg-gray-50 px-6 py-4">
+            <h3 class="text-lg font-medium text-gray-900">2. Responsabilités de l'utilisateur</h3>
+          </div>
+          <div class="px-6 py-4 bg-white">
+            <p class="text-gray-700">L'utilisateur s'engage à utiliser l'application dans le respect des lois en vigueur et à ne pas l'utiliser à des fins illégales.</p>
+          </div>
+        </div>
+        
+        <div class="border border-gray-200 rounded-lg overflow-hidden">
+          <div class="bg-gray-50 px-6 py-4">
+            <h3 class="text-lg font-medium text-gray-900">3. Modifications des conditions</h3>
+          </div>
+          <div class="px-6 py-4 bg-white">
+            <p class="text-gray-700">Nous nous réservons le droit de modifier ces conditions à tout moment. Les utilisateurs seront informés de toute modification.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Call to action -->
+      <div class="bg-gradient-to-r from-blue-500 to-teal-500 text-white p-8 rounded-lg text-center">
+        <h3 class="text-2xl font-bold mb-4">Votre santé est notre priorité</h3>
+        <p class="mb-6">En utilisant SKINIA, vous faites un pas important vers une meilleure surveillance de votre santé cutanée.</p>
+        <button class="bg-white text-blue-600 font-bold py-3 px-6 rounded-full hover:bg-blue-50 transition-colors shadow-md">
+          J'accepte les conditions
+        </button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+{% endblock %}

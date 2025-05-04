@@ -1,0 +1,298 @@
+{% extends "base.html" %}
+
+{% block title %}Résultat d'analyse - SKINIA{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6">
+            <h1 class="text-2xl font-bold text-white">Résultat d'analyse</h1>
+            <p class="text-blue-100">Analyse effectuée le {{ result.analysis_date.strftime('%d/%m/%Y à %H:%M') }}</p>
+        </div>
+        
+        <div class="p-6">
+            <div class="flex flex-wrap -mx-4">
+                <!-- Image analysée -->
+                <div class="w-full md:w-1/2 px-4 mb-6">
+                    <div class="bg-gray-50 p-6 rounded-lg h-full">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Image analysée</h2>
+                        <div class="flex justify-center mb-4">
+                            <img src="{{ url_for('static', filename='uploads/' + image.filename) }}" alt="Lésion cutanée" class="max-h-64 rounded shadow">
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <p>Fichier original: {{ image.original_filename }}</p>
+                            <p>Date d'upload: {{ image.upload_date.strftime('%d/%m/%Y') }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Résultats -->
+                <div class="w-full md:w-1/2 px-4 mb-6">
+                    <div class="bg-gray-50 p-6 rounded-lg h-full">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Résultats de l'analyse</h2>
+                        
+                        <div class="mb-6">
+                            <div class="mb-4">
+                                <h3 class="font-medium text-gray-700">Prédiction:</h3>
+                                <p class="text-2xl font-bold {{ result.benign_malignant == 'malignant' and 'text-red-600' or 'text-green-600' }}">
+                                    {{ result.prediction }}
+                                </p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h3 class="font-medium text-gray-700">Classification:</h3>
+                                <p class="text-lg {{ result.benign_malignant == 'malignant' and 'text-red-600' or 'text-green-600' }}">
+                                    {% if result.benign_malignant == 'benign' %}
+                                        <i class="fas fa-check-circle mr-2"></i> Probablement bénin
+                                    {% else %}
+                                        <i class="fas fa-exclamation-triangle mr-2"></i> Potentiellement malin
+                                    {% endif %}
+                                </p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h3 class="font-medium text-gray-700">Confiance dans la prédiction:</h3>
+                                <div class="w-full bg-gray-200 rounded-full h-4 mt-2">
+                                    <div class="bg-blue-600 h-4 rounded-full" style="width: {{ result.confidence * 100 }}%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-1">{{ (result.confidence * 100)|round|int }}% de confiance</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-{{ result.benign_malignant == 'malignant' and 'red' or 'green' }}-50 border-l-4 border-{{ result.benign_malignant == 'malignant' and 'red' or 'green' }}-500 p-4 mb-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-{{ result.benign_malignant == 'malignant' and 'exclamation-triangle' or 'info-circle' }} text-{{ result.benign_malignant == 'malignant' and 'red' or 'green' }}-500"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-{{ result.benign_malignant == 'malignant' and 'red' or 'green' }}-700">
+                                        {% if result.benign_malignant == 'malignant' %}
+                                            Il est fortement recommandé de consulter un dermatologue dès que possible pour une évaluation professionnelle.
+                                        {% else %}
+                                            La lésion semble bénigne, mais une surveillance régulière est recommandée. En cas de changement d'apparence, consultez un dermatologue.
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-2 mt-6">
+                            <a href="{{ url_for('find_dermatologist') }}" class="btn-primary">
+                                <i class="fas fa-user-md mr-2"></i> Trouver un dermatologue
+                            </a>
+                            <a href="{{ url_for('analyze') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-full transition-all">
+                                <i class="fas fa-plus mr-2"></i> Nouvelle analyse
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Avertissement -->
+                <div class="w-full px-4 mb-6">
+                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-yellow-800">Important</h3>
+                                <div class="mt-2 text-sm text-yellow-700">
+                                    <p>
+                                        Cette analyse est purement informative et ne constitue pas un diagnostic médical. 
+                                        Les résultats peuvent ne pas être précis à 100%. Consultez toujours un professionnel 
+                                        de santé pour une évaluation complète de toute lésion cutanée préoccupante.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Actions rapides -->
+            <div class="flex flex-wrap justify-center gap-4 mt-6">
+                <a href="{{ url_for('history') }}" class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all">
+                    <i class="fas fa-history text-blue-600 mr-2"></i>
+                    <span class="text-blue-800">Historique d'analyses</span>
+                </a>
+                <a href="{{ url_for('education') }}" class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all">
+                    <i class="fas fa-book-medical text-blue-600 mr-2"></i>
+                    <span class="text-blue-800">Informations sur les lésions cutanées</span>
+                </a>
+                <a href="{{ url_for('export_report', report_id=result.id) }}" class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all">
+                    <i class="fas fa-file-download text-blue-600 mr-2"></i>
+                    <span class="text-blue-800">Télécharger le rapport PDF</span>
+                </a>
+            </div>
+            
+            <!-- Caractéristiques détaillées -->
+            <div class="mt-10">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Caractéristiques détaillées</h2>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-medium text-gray-700 mb-3">Critères ABCDE</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 font-bold mr-2">A:</span>
+                                    <div>
+                                        <span class="font-medium">Asymétrie</span>
+                                        <p class="text-sm text-gray-600">{{ result.abcde.asymmetry }}</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 font-bold mr-2">B:</span>
+                                    <div>
+                                        <span class="font-medium">Bords</span>
+                                        <p class="text-sm text-gray-600">{{ result.abcde.borders }}</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 font-bold mr-2">C:</span>
+                                    <div>
+                                        <span class="font-medium">Couleur</span>
+                                        <p class="text-sm text-gray-600">{{ result.abcde.color }}</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 font-bold mr-2">D:</span>
+                                    <div>
+                                        <span class="font-medium">Diamètre</span>
+                                        <p class="text-sm text-gray-600">{{ result.abcde.diameter }}</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 font-bold mr-2">E:</span>
+                                    <div>
+                                        <span class="font-medium">Évolution</span>
+                                        <p class="text-sm text-gray-600">Impossible à déterminer à partir d'une seule image</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-medium text-gray-700 mb-3">Caractéristiques techniques</h3>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex justify-between">
+                                    <span>Type de lésion prédominant:</span>
+                                    <span class="font-medium">{{ result.technical.lesion_type }}</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span>Texture:</span>
+                                    <span class="font-medium">{{ result.technical.texture }}</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span>Régularité:</span>
+                                    <span class="font-medium">{{ result.technical.regularity }}</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span>Modèle utilisé:</span>
+                                    <span class="font-medium">{{ result.technical.model_version }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recommandations -->
+            <div class="mt-10">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Recommandations</h2>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="prose max-w-none">
+                        {% if result.benign_malignant == 'malignant' %}
+                            <div class="mb-4">
+                                <h3 class="text-red-600 font-medium">Consultation médicale</h3>
+                                <p>Il est vivement recommandé de consulter un dermatologue dès que possible pour une évaluation professionnelle de cette lésion.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-gray-700 font-medium">En attendant votre rendez-vous</h3>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Évitez d'exposer la zone concernée au soleil</li>
+                                    <li>Ne grattez pas ou n'irritez pas la lésion</li>
+                                    <li>Prenez des photos régulières pour documenter tout changement</li>
+                                    <li>Notez depuis combien de temps vous avez remarqué cette lésion</li>
+                                </ul>
+                            </div>
+                        {% else %}
+                            <div class="mb-4">
+                                <h3 class="text-green-600 font-medium">Surveillance recommandée</h3>
+                                <p>Bien que cette lésion semble bénigne, il est conseillé de la surveiller régulièrement. En cas de changement d'apparence, consultez un professionnel de santé.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-gray-700 font-medium">Bonnes pratiques</h3>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Examinez votre peau régulièrement (idéalement une fois par mois)</li>
+                                    <li>Prenez des photos pour suivre l'évolution des lésions</li>
+                                    <li>Protégez votre peau du soleil avec un écran solaire adapté</li>
+                                    <li>Consultez un dermatologue annuellement pour un examen complet</li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Partager les résultats -->
+            <div class="mt-10 text-center">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Partager ces résultats</h2>
+                <div class="flex justify-center space-x-6">
+                    <button type="button" class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all" id="share-email">
+                        <i class="fas fa-envelope text-blue-600 mr-2"></i>
+                        <span class="text-blue-800">Par email</span>
+                    </button>
+                    <button type="button" class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-all" id="share-doctor">
+                        <i class="fas fa-user-md text-blue-600 mr-2"></i>
+                        <span class="text-blue-800">À mon médecin</span>
+                    </button>
+                </div>
+                
+                <div class="hidden mt-6 max-w-md mx-auto" id="email-form">
+                    <form action="{{ url_for('share_result_email') }}" method="post">
+                        <input type="hidden" name="result_id" value="{{ result.id }}">
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1 text-left">Adresse email</label>
+                            <input type="email" name="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1 text-left">Message (optionnel)</label>
+                            <textarea name="message" id="message" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full transition-all">
+                            Envoyer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+            <div class="text-center text-sm text-gray-500">
+                <p>© {{ current_year }} SKINIA - Assistant d'analyse cutanée</p>
+                <p class="mt-1">
+                    <a href="{{ url_for('privacy') }}" class="text-blue-600 hover:underline">Politique de confidentialité</a> | 
+                    <a href="{{ url_for('terms') }}" class="text-blue-600 hover:underline">Conditions d'utilisation</a> | 
+                    <a href="{{ url_for('contact') }}" class="text-blue-600 hover:underline">Contact</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const shareEmailBtn = document.getElementById('share-email');
+        const emailForm = document.getElementById('email-form');
+        
+        shareEmailBtn.addEventListener('click', function() {
+            emailForm.classList.toggle('hidden');
+        });
+        
+        const shareDoctorBtn = document.getElementById('share-doctor');
+        shareDoctorBtn.addEventListener('click', function() {
+            window.location.href = "{{ url_for('share_with_doctor', result_id=result.id) }}";
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}À propos - SKINIA{% endblock %}
+
+{% block content %}
+<section class="about-section py-16 relative overflow-hidden">
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">Notre Vision</h1>
+        
+        <!-- Section Mission -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-12 relative overflow-hidden transform hover:scale-[1.01] transition-transform">
+            <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
+            <h2 class="text-3xl font-semibold text-gray-800 mb-4">La prévention à portée de main</h2>
+            <p class="text-lg text-gray-600 leading-relaxed">
+                SKINIA est née d'une conviction profonde : la détection précoce du cancer de la peau peut sauver des vies. 
+                Notre application combine l'intelligence artificielle de pointe et l'expertise médicale pour mettre 
+                à votre disposition un outil accessible, fiable et innovant capable d'analyser vos lésions cutanées 
+                et de vous orienter vers les professionnels appropriés.
+            </p>
+        </div>
+        
+        <!-- Sections Technologies avec icônes -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div class="bg-blue-50 rounded-xl p-6 text-center shadow-md transform hover:translate-y-[-5px] transition-transform">
+                <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-brain text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Intelligence Artificielle</h3>
+                <p class="text-gray-600">
+                    Notre algorithme a été entraîné sur des millions d'images de lésions cutanées,
+                    lui permettant de détecter avec précision les signes précoces du mélanome et d'autres
+                    affections dermatologiques.
+                </p>
+            </div>
+            
+            <div class="bg-blue-50 rounded-xl p-6 text-center shadow-md transform hover:translate-y-[-5px] transition-transform">
+                <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Sécurité & Confidentialité</h3>
+                <p class="text-gray-600">
+                    Vos données sont chiffrées et protégées selon les normes les plus strictes.
+                    Nous respectons votre vie privée et ne partageons jamais vos informations
+                    sans votre consentement explicite.
+                </p>
+            </div>
+            
+            <div class="bg-blue-50 rounded-xl p-6 text-center shadow-md transform hover:translate-y-[-5px] transition-transform">
+                <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-heartbeat text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Approche Holistique</h3>
+                <p class="text-gray-600">
+                    Au-delà de l'analyse, nous vous proposons un suivi personnalisé,
+                    des conseils de prévention adaptés à votre profil et une mise en relation
+                    avec des dermatologues partenaires.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Section Engagement -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Notre Engagement</h2>
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+                        <img src="/static/img/Dermato.jpg" alt="Prévention du cancer de la peau" class="rounded-lg shadow-lg">
+                    </div>
+                    <div class="md:w-1/2">
+                        <p class="text-lg text-gray-600 leading-relaxed mb-4">
+                            Chez SKINIA, nous sommes déterminés à démocratiser l'accès à la détection précoce 
+                            des cancers cutanés. Notre technologie évolue constamment grâce à l'apprentissage 
+                            continu et aux partenariats avec des institutions médicales reconnues.
+                        </p>
+                        <p class="text-lg text-gray-600 leading-relaxed">
+                            Nous nous engageons à maintenir la plus haute qualité d'analyse tout en rendant 
+                            notre service accessible au plus grand nombre. Chaque analyse effectuée contribue 
+                            à améliorer notre algorithme et potentiellement à sauver des vies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Appel à l'action -->
+        <div class="text-center">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Prêt à prendre soin de votre peau ?</h2>
+            <p class="text-lg text-gray-600 mb-8">Découvrez dès maintenant comment SKINIA peut vous aider à surveiller votre santé cutanée.</p>
+            <div class="flex justify-center gap-4">
+                <a href="/analyze" class="btn-primary py-3 px-8 text-lg font-medium">Commencer une analyse</a>
+                <a href="/contact" class="bg-white text-blue-500 border border-blue-500 py-3 px-8 rounded-full text-lg font-medium hover:bg-blue-50 transition-colors">Nous contacter</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,26 @@
+.analyze-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.upload-box {
+    border: 2px dashed #1A6BBA;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.risk-level {
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 1rem 0;
+}
+
+.high-risk { background-color: #D32F2F20; color: #D32F2F; }
+.medium-risk { background-color: #FFC10720; color: #FFA000; }
+.low-risk { background-color: #4CAF5020; color: #2E7D32; }
+
+.hidden { display: none; }

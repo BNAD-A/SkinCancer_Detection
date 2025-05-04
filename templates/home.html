@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - SKINIA{% endblock %}
+
+{% block content %}
+<section class="relative bg-white py-16">
+    <div class="blue-curve"></div>
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Votre sentinelle cutanée intelligente</h1>
+            <p class="text-lg text-gray-600 mb-8">Dépistez les risques de cancer de la peau grâce à notre technologie de pointe.
+                Obtenez une analyse précise de vos lésions en quelques secondes, pour une tranquillité d'esprit immédiate.</p>
+            <div class="flex space-x-4">
+                <a href="/analyze" class="btn-primary">Analyser une photo</a>
+                <a href="/contact" class="text-blue-500 hover:text-blue-700 flex items-center">
+                    <span>Trouver un dermatologue</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+        <div class="md:w-1/2">
+            <img src="{{ url_for('static', filename='img/Dermato.jpg') }}" alt="Détection de cancer de la peau" class="rounded-lg shadow-xl">
+        </div>
+    </div>
+</section>
+
+<section class="bg-gray-50 py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Comment ça fonctionne</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-blue-500 text-4xl mb-4">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Prenez une photo</h3>
+                <p class="text-gray-600">Photographiez la lésion cutanée à analyser avec votre smartphone ou téléchargez une image existante.</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-blue-500 text-4xl mb-4">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Analyse IA</h3>
+                <p class="text-gray-600">Notre algorithme analyse l'image et compare la lésion avec des milliers de cas pour détecter des anomalies.</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-blue-500 text-4xl mb-4">
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Votre bilan personnalisé</h3>
+                <p class="text-gray-600"> Recevez immédiatement un rapport détaillé avec indice de risque, comparaisons visuelles explicatives et recommandations personnalisées.
+                Partagez facilement ces résultats avec votre dermatologue pour un suivi optimal.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,63 @@
+<section id="symptoms-section" class="py-16 hidden">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-10">La règle ABCDE pour surveiller vos grains de beauté</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+            {% for lettre, titre, description in [
+                ('A', 'Asymétrie', "Les deux moitiés ne sont pas identiques."),
+                ('B', 'Bords', "Bords irréguliers, dentelés ou mal délimités."),
+                ('C', 'Couleur', "Présence de plusieurs teintes."),
+                ('D', 'Diamètre', "Plus de 6 mm (taille d'une gomme)."),
+                ('E', 'Évolution', "Changement d’aspect dans le temps.")
+            ] %}
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-red-100 text-red-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold">{{ lettre }}</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-center">{{ titre }}</h3>
+                <p class="text-gray-600 text-center">{{ description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="bg-white p-8 rounded-lg shadow-md mb-10">
+            <h3 class="text-2xl font-bold mb-6">Autres symptômes à surveiller</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-lg font-semibold mb-3 flex items-center">
+                        <i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>
+                        Carcinome basocellulaire
+                    </h4>
+                    <ul class="space-y-2 text-gray-600 ml-6">
+                        <li class="flex items-start"><i class="fas fa-circle text-xs mt-1.5 mr-2 text-gray-400"></i><span>Lésion nacrée, brillante ou translucide</span></li>
+                        <li class="flex items-start"><i class="fas fa-circle text-xs mt-1.5 mr-2 text-gray-400"></i><span>Plaie qui ne guérit pas</span></li>
+                        <li class="flex items-start"><i class="fas fa-circle text-xs mt-1.5 mr-2 text-gray-400"></i><span>Zone rosée ou rougeâtre</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-3 flex items-center">
+                        <i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>
+                        Carcinome épidermoïde
+                    </h4>
+                    <ul class="space-y-2 text-gray-600 ml-6">
+                        <li class="flex items-start"><i class="fas fa-circle text-xs mt-1.5 mr-2 text-gray-400"></i><span>Croûte persistante</span></li>
+                        <li class="flex items-start"><i class="fas fa-circle text-xs mt-1.5 mr-2 text-gray-400"></i><span>Excroissance squameuse</span></li>
+                        <li class="flex items-start"><i class="fas fa-circle text-xs mt-1.5 mr-2 text-gray-400"></i><span>Lésion semblable à une verrue</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-red-50 p-6 rounded-lg border-l-4 border-red-500">
+            <div class="flex items-start">
+                <div class="text-red-500 mr-4">
+                    <i class="fas fa-exclamation-triangle text-3xl"></i>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-red-700 mb-2">Important</h4>
+                    <p class="text-gray-700">En cas de doute ou de changement suspect, consultez un dermatologue. DermaScan n'est pas un outil de diagnostic médical.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

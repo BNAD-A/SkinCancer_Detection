@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Conseils pour la santé de votre peau{% endblock %}
+
+{% block content %}
+<!-- Tips Hero Section -->
+<section class="relative bg-white py-16">
+    <div class="blue-curve"></div>
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 text-center">Conseils pour la santé de votre peau</h1>
+        <p class="text-lg text-gray-600 mb-8 text-center max-w-3xl mx-auto">
+            La prévention est essentielle pour maintenir une peau saine et réduire les risques de cancer cutané.
+            Découvrez nos conseils d'experts pour prendre soin de votre peau au quotidien.
+        </p>
+    </div>
+</section>
+
+<!-- Tabs -->
+<section class="bg-white border-b">
+    <div class="container mx-auto px-4">
+        <div class="flex overflow-x-auto">
+            <button class="tab-active py-4 px-6 text-lg whitespace-nowrap" data-tab="prevention">Prévention</button>
+            <button class="py-4 px-6 text-lg text-gray-600 whitespace-nowrap" data-tab="symptoms">Symptômes à surveiller</button>
+            <button class="py-4 px-6 text-lg text-gray-600 whitespace-nowrap" data-tab="skincare">Soins quotidiens</button>
+            <button class="py-4 px-6 text-lg text-gray-600 whitespace-nowrap" data-tab="faq">FAQ</button>
+        </div>
+    </div>
+</section>
+
+<!-- Sections -->
+{% include 'tips/prevention.html' %}
+{% include 'tips/symptoms.html' %}
+{% include 'tips/skincare.html' %}
+{% include 'tips/faq.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const tabs = document.querySelectorAll('[data-tab]');
+        const sections = {
+            prevention: document.getElementById("prevention-section"),
+            symptoms: document.getElementById("symptoms-section"),
+            skincare: document.getElementById("skincare-section"),
+            faq: document.getElementById("faq-section")
+        };
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Reset tabs
+                tabs.forEach(t => {
+                    t.classList.remove('tab-active');
+                    t.classList.add('text-gray-600');
+                });
+
+                // Activate current
+                tab.classList.add('tab-active');
+                tab.classList.remove('text-gray-600');
+
+                // Hide all sections
+                Object.values(sections).forEach(section => {
+                    if (section) section.classList.add('hidden');
+                });
+
+                // Show selected section
+                const target = tab.dataset.tab;
+                if (sections[target]) sections[target].classList.remove('hidden');
+            });
+        });
+
+        // Accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('i');
+                content.classList.toggle('open');
+                icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+        });
+    });
+</script>
+{% endblock %}
