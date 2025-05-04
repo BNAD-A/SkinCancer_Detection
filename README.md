@@ -1,4 +1,4 @@
-<h1 align="center">🌞 SKINIA – Votre peau sous haute surveillance IA</h1>
+<h1 align="center">🌞 SKINIA – Your Skin, Under Smart AI Surveillance</h1>
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.10+-blue.svg">
   <img src="https://img.shields.io/badge/flask-%23ffffff.svg?style=flat&logo=flask&logoColor=black">
@@ -6,80 +6,88 @@
   <img src="https://img.shields.io/badge/TailwindCSS-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white">
 </p>
 
-<p align="center">🧴 L'application intelligente qui vous aide à détecter les lésions cutanées suspectes avant qu'elles ne deviennent un problème. 🧠</p>
+<p align="center">🧴 The smart app that helps you detect suspicious skin lesions before they become a problem. 🧠</p>
 
 ---
 
-## 🧬 À propos de SKINIA
+## 🧬 About SKINIA
 
-**SKINIA** est une plateforme moderne de **détection assistée par IA du cancer de la peau**, développée pour aider à la **prévention et au dépistage précoce**. 
+**SKINIA** is a modern platform for **AI-assisted skin cancer detection**, designed to help with **prevention and early diagnosis**.
 
-Grâce à un modèle de Deep Learning performant et à une interface intuitive, **SKINIA** permet :
+With a powerful deep learning model and an intuitive interface, **SKINIA** allows users to:
 
-✅ L’analyse d’une photo de lésion cutanée en quelques secondes  
-✅ La visualisation sur carte des dermatologues à proximité  
-✅ Le suivi des analyses précédentes avec un historique  
-✅ Des conseils pratiques pour surveiller votre peau  
+✅ Analyze a photo of a skin lesion in seconds  
+✅ View a map of nearby dermatologists  
+✅ Track past analyses in a personal history  
+✅ Access practical tips for monitoring your skin  
 
-> 🎯 Notre objectif : **offrir un assistant numérique pour votre santé cutanée.**
+> 🎯 Our mission: **To offer a digital companion for your skin health.**
 
 ---
 
-## 🚀 Fonctionnalités principales
+## 🚀 Main Features
 
-- 📷 **Scanner une lésion** : Upload & analyse via un modèle CNN
-- 🗺️ **Carte interactive** des dermatologues au Maroc
-- 🛡️ **Authentification & Profil utilisateur**
-- 📚 **Conseils de prévention**
-- 🕘 **Historique des analyses**
-- ✉️ **Contact rapide** avec un dermatologue
+- 📷 **Scan a lesion**: Upload & analyze via CNN model
+- 🗺️ **Interactive map** of dermatologists in Morocco
+- 🛡️ **User authentication & profiles**
+- 📚 **Prevention advice and tips**
+- 🕘 **Analysis history tracking**
+- ✉️ **Quick contact with dermatologists**
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Technologie | Rôle |
-|-------------|------|
+| Technology | Purpose |
+|------------|---------|
 | **Python** + Flask | Backend + API |
-| **TensorFlow / Keras** | Classification IA |
-| **HTML5 + Tailwind CSS** | Frontend moderne |
-| **Leaflet.js** | Carte interactive |
-| **SQLite** | Base de données légère |
-| **Jinja2** | Templates dynamiques |
+| **TensorFlow / Keras** | Image classification AI |
+| **HTML5 + Tailwind CSS** | Modern frontend |
+| **Leaflet.js** | Interactive map |
+| **SQLite** | Lightweight database |
+| **Jinja2** | Dynamic templates |
 
 ---
 
-## 🎨 Aperçu de l'application 
--📱 **Analyse IA en temps réel**
--🗺️ **Localisation intelligente des dermatologues**
--🔒 **Sécurité & UX pensée pour le patient**
+## 🎨 App Preview
+- 📱 **Real-time AI analysis**
+- 🗺️ **Smart dermatologists locator**
+- 🔒 **Secure design with a patient-first UX**
 
-## ⚠️ Important
-SKINIA ne remplace pas une consultation médicale.
-Cette application est un outil d’aide à la vigilance et ne fournit pas de diagnostic médical officiel.
+---
 
-## 💡Projets futurs
-**Intégration d’un système de télémédecine 📞**
+## ⚠️ Disclaimer
 
-**Version mobile avec Flutter 📲**
+**SKINIA is not a substitute for medical consultation.**  
+It is a vigilance tool and does **not provide official medical diagnoses**.
 
-**Tableau de bord admin pour les médecins 👨‍⚕️**
+---
 
-## 🤝 Contribuer
-Tu veux participer à SKINIA ?
-Voici comment démarrer :
+## 💡 Future Plans
 
-🍴 Fork le projet
+**📞 Telemedicine integration**  
+**📲 Mobile version with Flutter**  
+**👨‍⚕️ Admin dashboard for doctors**
 
-🔧 Crée une branche (git checkout -b feature)
+---
 
-✅ Commit tes changements (git commit -m 'Ajout d’une fonctionnalité')
+## 🤝 Contribute
 
-📬 Ouvre une Pull Request
+Want to contribute to SKINIA?  
+Here's how to get started:
 
-## 📜 Licence
-Projet sous licence MIT – libre d’utilisation avec mention.
+🍴 Fork the project  
+🔧 Create a branch (`git checkout -b feature`)  
+✅ Commit your changes (`git commit -m 'Add new feature'`)  
+📬 Open a Pull Request
 
-## Développé avec ❤️ par des étudiants en Génie Digital Santé
-## **SKINIA – Parce que votre peau mérite l’intelligence.**
+---
 
+## 📜 License
+
+Project under MIT License – free to use with attribution.
+
+---
+
+## Developed with ❤️ by students in Digital Health Engineering  
+## **SKINIA – Because your skin deserves intelligence.**
