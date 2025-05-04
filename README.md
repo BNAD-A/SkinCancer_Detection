@@ -54,18 +54,18 @@ Grâce à un modèle de Deep Learning performant et à une interface intuitive, 
 -🗺️ **Localisation intelligente des dermatologues**
 -🔒 **Sécurité & UX pensée pour le patient**
 
-⚠️ Important
+## ⚠️ Important
 SKINIA ne remplace pas une consultation médicale.
 Cette application est un outil d’aide à la vigilance et ne fournit pas de diagnostic médical officiel.
 
-💡 Projets futurs
+## 💡Projets futurs
 **Intégration d’un système de télémédecine 📞**
 
 **Version mobile avec Flutter 📲**
 
 **Tableau de bord admin pour les médecins 👨‍⚕️**
 
-🤝 Contribuer
+## 🤝 Contribuer
 Tu veux participer à SKINIA ?
 Voici comment démarrer :
 
@@ -77,9 +77,9 @@ Voici comment démarrer :
 
 📬 Ouvre une Pull Request
 
-📜 Licence
+## 📜 Licence
 Projet sous licence MIT – libre d’utilisation avec mention.
 
-Développé avec ❤️ par des étudiants en Génie Digital Santé
-**SKINIA – Parce que votre peau mérite l’intelligence.**
+## Développé avec ❤️ par des étudiants en Génie Digital Santé
+## **SKINIA – Parce que votre peau mérite l’intelligence.**
 
