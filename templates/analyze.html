@@ -1,163 +1,105 @@
 {% extends "base.html" %}
 
-{% block title %}DermaScan - Workflow complet{% endblock %}
+{% block title %}Analyse - SKINIA{% endblock %}
 
 {% block content %}
-
-<style>
-    .bodymap-container {
-        position: relative;
-        max-width: 28%;
-        margin: 0 auto;
-    }
-
-    .bodymap-image {
-        width: 100%;
-        height: auto;
-    }
-
-    .zone-selector {
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        background-color: rgba(66, 133, 244, 0.3);
-        border: 2px dashed #4285f4;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .zone-selector:hover {
-        background-color: rgba(66, 133, 244, 0.5);
-    }
-
-</style>
-
 <main class="container mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold mb-6 text-center">1. Sélectionnez la zone du corps</h2>
-    
-    <div id="zone-selection" class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
-        <!-- Body Map Section -->
-        <div class="bodymap-container mb-8">
-            <img src="{{ url_for('static', filename='img/Face.jpg') }}" alt="Corps humain de face" class="bodymap-image" id="body-image">
-            
-            <!-- Zones cliquables -->
-            <div class="zone-selector" style="top: 15%; left: 50%;" data-zone="visage"></div>
-            <div class="zone-selector" style="top: 30%; left: 30%;" data-zone="bras gauche"></div>
-            <div class="zone-selector" style="top: 30%; left: 70%;" data-zone="bras droit"></div>
-            <div class="zone-selector" style="top: 50%; left: 50%;" data-zone="torse"></div>
-            
-            <!-- Zones supplémentaires -->
-            <div class="zone-selector" style="top: 70%; left: 35%;" data-zone="jambe avant gauche"></div>
-            <div class="zone-selector" style="top: 70%; left: 65%;" data-zone="jambe avant droite"></div>
-            <div class="zone-selector" style="top: 85%; left: 35%;" data-zone="jambe arrière gauche"></div>
-            <div class="zone-selector" style="top: 85%; left: 65%;" data-zone="jambe arrière droite"></div>
-            
-            <button id="switch-view" class="absolute top-2 right-2 bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm">
+
+
+    <div id="zone-selection" class="mb-8 text-center">
+        <h3 class="text-2xl font-bold mb-6 text-center">1. Sélectionnez la zone du corps</h3>
+        
+        <div id="bodymap-zone" class="mb-8">
+            <button type="button" id="switch-view" class="mb-4 px-3 py-1 bg-gray-200 rounded text-sm">
                 <i class="fas fa-sync-alt mr-1"></i> Dos
             </button>
-        </div>
-        
-        <div class="text-center">
-            <p class="text-gray-600 mb-4">Zone sélectionnée : <span id="selected-zone" class="font-semibold">Aucune</span></p>
-            <button id="confirm-zone" class="bg-blue-600 text-white px-6 py-2 rounded-full disabled:opacity-50" disabled>
+    
+            <div class="relative w-full max-w-xs mx-auto">
+                <img src="{{ url_for('static', filename='img/Face.jpg') }}" id="body-image" alt="body" class="w-full">
+    
+                <!-- Zones interactives -->
+                <div class="zone-selector" data-zone="visage" style="top: 10%; left: 50%;"></div>
+                <div class="zone-selector" data-zone="bras gauche" style="top: 35%; left: 25%;"></div>
+                <div class="zone-selector" data-zone="bras droit" style="top: 35%; left: 75%;"></div>
+                <div class="zone-selector" data-zone="torse" style="top: 32%; left: 50%;"></div>
+                <div class="zone-selector" data-zone="abdomen" style="top: 45%; left: 50%;"></div>
+                <div class="zone-selector" data-zone="jambe gauche" style="top: 65%; left: 40%;"></div>
+                <div class="zone-selector" data-zone="jambe droite" style="top: 65%; left: 60%;"></div>
+                <div class="zone-selector" data-zone="pied gauche" style="top: 95%; left: 40%;"></div>
+                <div class="zone-selector" data-zone="pied droit" style="top: 95%; left: 60%;"></div>
+            </div>
+    
+            <p class="mt-2">
+                Zone sélectionnée : <span id="selected-zone" class="font-semibold text-blue-600">Aucune</span>
+            </p>
+    
+            <button id="confirm-zone" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-full disabled:opacity-50" disabled>
                 Confirmer et analyser <i class="fas fa-arrow-right ml-2"></i>
             </button>
         </div>
-    </div>
+    </div>    
 
-    <!-- Étape 2 : Analyse (masquée initialement) -->
     <section id="analyse-section" class="container mx-auto px-4 py-8 hidden">
         <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-bold mb-6 text-center">2. Analyse de la lésion</h2>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center mb-4">
-                        <i class="fas fa-camera text-gray-400 text-4xl mb-3"></i>
-                        <p class="text-gray-500 mb-2">Déposez votre photo ici</p>
-                        <input type="file" id="lesion-image" accept="image/*" class="hidden">
-                        <label for="lesion-image" class="inline-block bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
-                            <i class="fas fa-upload mr-2"></i>Choisir un fichier
-                        </label>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h4 class="font-semibold mb-2">Zone analysée :</h4>
-                        <p id="analyse-zone" class="text-gray-700"></p>
-                    </div>
-                </div>
-                
-                <div>
-                    <div id="results-placeholder" class="text-center py-8 text-gray-400">
-                        <i class="fas fa-microscope text-4xl mb-3"></i>
-                        <p>Résultats d'analyse apparaîtront ici</p>
-                    </div>
-                    
-                    <div id="results-container" class="hidden">
-                        <div class="mb-4">
-                            <h4 class="font-semibold">Diagnostic :</h4>
-                            <p id="diagnostic-result" class="text-lg font-bold"></p>
+            <h3 class="text-2xl font-bold mb-6 text-center">2. Analyse de la lésion</h3>
+            <form id="analyze-form" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="location" id="hidden-location">
+    
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- 📸 Upload -->
+                    <div>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center mb-4">
+                            <i class="fas fa-camera text-gray-400 text-4xl mb-3"></i>
+                            <p class="text-gray-500 mb-2">Déposez votre photo ici</p>
+                            <input type="file" name="image" id="lesion-image" accept="image/*" required class="hidden">
+                            <label for="lesion-image" class="inline-block bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
+                                <i class="fas fa-upload mr-2"></i>Choisir un fichier
+                            </label>
                         </div>
-                        <div class="mb-4">
-                            <h4 class="font-semibold">Niveau de risque :</h4>
-                            <div class="flex items-center mt-2">
-                                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div id="risk-level" class="h-2.5 rounded-full"></div>
-                                </div>
-                                <span id="risk-percent" class="ml-2 font-medium"></span>
-                            </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold mb-2">Zone analysée :</h4>
+                            <p id="analyse-zone" class="text-gray-700">-</p>
                         </div>
-                        <button id="save-result" class="w-full bg-blue-600 text-white py-2 rounded">
-                            <i class="fas fa-save mr-2"></i>Enregistrer dans l'historique
+                        <button type="submit" id="analyze-btn" class="w-full bg-blue-600 mt-4 hover:bg-blue-700 text-white py-2 px-4 rounded">
+                            Analyser
                         </button>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Étape 3 : Historique avec visualisation -->
-    <section id="historique-section" class="container mx-auto px-4 py-8 hidden">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-2xl font-bold mb-6 text-center">3. Historique des analyses</h2>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Carte corporelle avec marqueurs -->
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-xl font-semibold mb-4">Visualisation</h3>
-                    <div class="bodymap-container">
-                        <img src="{{ url_for('static', filename='img/Face.jpg') }}" alt="Corps humain" class="bodymap-image">
-                        <!-- Marqueurs générés dynamiquement -->
-                        <div id="historique-markers"></div>
-                    </div>
-                </div>
-                
-                <!-- Liste des analyses -->
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-xl font-semibold mb-4">Détails des lésions</h3>
-                    <div class="space-y-4 max-h-96 overflow-y-auto pr-2" id="lesions-list">
-                        <!-- Exemple d'entrée -->
-                        <div class="border rounded-lg p-4 lesion-entry" data-id="1" data-zone="bras gauche">
-                            <div class="flex justify-between">
-                                <h4 class="font-bold">Lésion #1</h4>
-                                <span class="text-sm text-gray-500">15/05/2025</span>
-                            </div>
-                            <div class="flex mt-2">
-                                <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full mr-2">Bénin</span>
-                                <span class="text-sm text-gray-600">Bras gauche</span>
-                            </div>
-                            <button class="mt-2 text-blue-600 text-sm flex items-center view-detail">
-                                <i class="fas fa-eye mr-1"></i> Voir détails
+    
+                    <!-- 🔬 Résultats -->
+                    <div>
+                        <div id="results-placeholder" class="text-center py-8 text-gray-400">
+                            <i class="fas fa-microscope text-4xl mb-3"></i>
+                            <p>Résultats d'analyse apparaîtront ici</p>
+                        </div>
+    
+                        <div id="result-container" class="hidden">
+                            <h3 class="text-xl font-semibold mb-2">Résultat de l'analyse :</h3>
+                            <p><strong>Diagnostic :</strong> <span id="result-diagnostic" class="font-bold text-blue-700"></span></p>
+                            <p><strong>Confiance :</strong> <span id="result-confidence"></span></p>
+                            <p><strong>Explication :</strong> <span id="result-explication"></span></p>
+                            <p><strong>Date :</strong> <span id="result-date"></span></p>
+                            <p><strong>Localisation :</strong> <span id="result-location"></span></p>
+    
+                            <button id="save-result" class="mt-4 w-full bg-blue-600 text-white py-2 rounded">
+                                <i class="fas fa-save mr-2"></i>Enregistrer dans l'historique
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
-</main>
-
-<!-- External JS Reference -->
-<script src="{{ url_for('static', filename='js/interactiveMap.js') }}"></script>
-{% endblock %}
+    
+    <script>
+        document.getElementById("lesion-image").addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const label = document.querySelector("label[for='lesion-image']");
+                label.innerHTML = `<i class="fas fa-check-circle mr-2 text-green-500"></i>${file.name}`;
+            }
+        });
+    </script>
+        
+    <script src="{{ url_for('static', filename='js/interactiveMap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/analyze.js') }}"></script>
+{% endblock %}    
